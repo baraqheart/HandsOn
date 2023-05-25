@@ -1,0 +1,4 @@
+# these variables will be accessible to all hosts
+dbname: "accounts"
+dbuser: "admin"
+dbpassword: 1234

@@ -1,0 +1,20 @@
+---
+
+- name: Understanding precedence in variables
+  hosts: all
+  become: yes
+  vars:
+    USRNM: playuser
+    COMM: variable from playbook  
+  tasks:
+    - name: Create a user
+      user: 
+        name: "{{USRNM}}"
+        comment: "{{COMM}}"
+      register: USROUT
+    - name: print some values
+      debug: 
+        var: USROUT.name
+    - debug: 
+        var: USROUT.comment
+

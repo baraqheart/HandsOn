@@ -1,0 +1,61 @@
+---
+- name: Provisioning server
+  hosts: all
+  become: yes
+  tasks:
+    - name: Install NTP on CentOS
+      yum: 
+        name: "{{item}}"
+        state: present
+        update_cache: yes
+      when: ansible_distribution == "CentOS"
+      loop:
+        - ntpd
+        - git
+        - zip
+        - unzip
+        - wget
+
+    - name: Install NTP on Ubuntu
+      yum: 
+        name: "{{item}}"
+        state: present
+      when: ansible_distribution == "Ubuntu"
+      loop:
+        - ntp
+        - git
+        - zip
+        - unzip
+        - wget
+    
+    - name: Start and Enable service
+      service:
+        name: ntp
+        state: started
+        Enabled: yes
+      when: ansible_os_family == "Debian"
+
+    - name: Start and Enable service
+      service:
+        name: ntpd
+        state: started
+        Enabled: yes
+      when: ansible_os_family == "Redhat"
+
+    - name: Add group
+      group:
+        name: devops
+        state: present
+
+    - name: Add user
+      user:
+        name: "{{item}}"
+        state: present
+      loop: "{{usernames}}"
+        - user1
+        - user2
+        - user3
+        - user4 
+
+    
+   

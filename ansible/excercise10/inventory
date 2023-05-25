@@ -1,0 +1,22 @@
+web01 ansible_host=<privateipaddr> 
+web02 ansible_host=<privateipaddr> 
+web03 ansible_host=<privateipaddr> ansible_user=ubuntu
+db01 ansible_host=<privateipaddr> 
+
+[webservers]
+web01
+web02
+web03
+
+[dbservers]
+db01
+
+[n_virg:children]
+webservers
+dbservers
+
+
+[n_virg:vars]
+ansible_user=centos
+ansible_ssh_private_key_file=<keyname.pem>
+

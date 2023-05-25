@@ -1,0 +1,13 @@
+---
+
+- name: Learning fact variables
+  hosts: web01
+  become: yes
+  tasks:
+    - name: print os names
+      debug: 
+        var: ansible_distribution
+    - debug: 
+        var: ansible_memory_mb
+    - debug: 
+        var: ansible_memory_mb.real.free

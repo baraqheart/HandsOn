@@ -1,0 +1,3 @@
+#this is a global variable declaration style
+USRNM: globaluser
+COMM: variable from group_vars  

@@ -1,0 +1,52 @@
+---
+
+- name: Setup database servers
+  hosts: dbservers
+  become: yes
+  # vars:
+   # dbname: accounts
+   # dbuser: admin
+   # dbpassword: 1234
+  tasks: 
+    - name: Install mysql server
+      yum: 
+        name: mariadb-server
+        state: present
+
+    - name: Start and Enable mysql server
+      service: 
+        name: mariadb-server
+        state: started
+        enable: yes
+
+    - name: Install dependencies 
+      yum: 
+        name: MySQL-python
+        state: present
+
+    - name: Start and Enable mysql server
+      service: 
+        name: mariadb-server
+        state: started
+        enable: yes
+
+
+    - name: Create a new database with name 'accounts'
+      mysql_db: 
+        name: "{{dbname}}"
+        state: present
+
+    - name: Create a new user with name 'admin' and password '1234' with assigned all previledges '*'
+      mysql_user: 
+        name: "{{dbuser}}"
+        password: "{{dbpassword}}"
+        state: present
+        priv: '*.*:ALL'     
+
+        
+        
+
+
+
+
+

@@ -1,0 +1,26 @@
+resource "null_resource" "connector" {
+
+  connection {
+    type        = "ssh"
+    user        = "ubuntu"
+    private_key = file("jen_key")
+    host        = aws_instance.jenkins.public_ip
+
+  }
+
+  provisioner "file" {
+    source      = "jenkins_script.sh"
+    destination = "/tmp/jenkins_script.sh"
+  }
+
+  provisioner "remote-exec" {
+    inline = [
+      "sudo chmod u+x /tmp/jenkins_script.sh",
+      "sh /tmp/jenkins_script.sh"
+    ]
+  }
+
+  depends_on = [aws_instance.jenkins]
+
+
+}
